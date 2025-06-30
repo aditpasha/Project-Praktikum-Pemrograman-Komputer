@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Data Users</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}"> <!-- CSS External -->
+    <style>
+        /* Add some basic styling */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f798;
+            padding: 20px;
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+        th, td {
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #594caf;
+            color: rgb(255, 255, 255);
+        }
+        td {
+            background-color: #f9f9f9;
+        }
+        .actions {
+            display: flex;
+            justify-content: space-around;
+        }
+        .btn {
+            padding: 5px 10px;
+            color: white;
+            border: none;
+            cursor: pointer;
+            margin: 0 5px;
+        }
+        .btn-edit {
+            background-color: #ffa500;
+        }
+        .btn-delete {
+            background-color: #711bcc;
+        }
+        .btn-add {
+            background-color: #594caf;
+            color: white;
+            text-decoration: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            display: inline-block;
+            margin: 10px 0;
+        }
+    </style>
+</head>
+<body>
+    <h1>Data Users</h1>
+    <a href="{{ url_for('add_user') }}" class="btn-add">Add New User</a>
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nama</th>
+                <th>Email</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for user in users %}
+            <tr>
+                <td>{{ user.id }}</td>
+                <td>{{ user.name }}</td>
+                <td>{{ user.email }}</td>
+                <td class="actions">
+                    <a href="{{ url_for('edit_user', id=user.id) }}" class="btn btn-edit">Edit</a>
+                    <form action="{{ url_for('delete_user', id=user.id) }}" method="POST" style="display:inline;">
+                        <button type="submit" class="btn btn-delete">Delete</button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>
